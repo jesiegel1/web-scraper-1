@@ -2,8 +2,9 @@
 require 'phantomjs'
 require 'capybara/poltergeist'
 
+Phantomjs.path # Force install on require
 Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, js_errors: false)
+  Capybara::Poltergeist::Driver.new(app, phantomjs: Phantomjs.path, js_errors: false)
 end
 
 Capybara.default_driver = :poltergeist
@@ -16,17 +17,6 @@ require 'json'
 require 'nokogiri'
 require 'csv'
 require 'Indirizzo'
-
-puts "How many rows should be fetched?"
-number_of_rows = gets.chomp
-puts "Please enter a name for your output file."
-output_file = gets.chomp
-puts "Please enter the root url being scraped (the main url without any additional parameters: http://<some_url>.com)."
-root_url = gets.chomp
-puts "Please enter the full url being scraped."
-main_url = gets.chomp
-
-run_scraper(number_of_rows, output_file, root_url, main_url)
 
 @number_of_rows = nil
 @output_file = nil
@@ -243,5 +233,15 @@ def run_scraper(number_of_rows, output_file, root_url, main_url)
 end
 
 
+puts "How many rows should be fetched?"
+number_of_rows = gets.chomp
+puts "Please enter a name for your output file."
+output_file = gets.chomp
+puts "Please enter the root url being scraped (the main url without any additional parameters: http://<some_url>.com)."
+root_url = gets.chomp
+puts "Please enter the full url being scraped."
+main_url = gets.chomp
+
+run_scraper(number_of_rows, output_file, root_url, main_url)
 
 
